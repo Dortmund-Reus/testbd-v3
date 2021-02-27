@@ -14,36 +14,12 @@ download_button.disabled = true;
 //上传文件
 function easyUpload(){
     sendUploadRequest();  
-    // var input = document.createElement("input");
-    // input.type = "file";
-    // input.click();
-    // input.onchange = function(){
-    //   var file = input.files[0];
-    //   var form = new FormData();
-    //  form.append("file", file); //第一个参数是后台读取的请求key值
-    //  form.append("fileName", file.name);
-    //  form.append("other", "666666"); //实际业务的其他请求参数
-   // fileShow.value = file.name;
-      //console.log(file.size);
-     // var xhr = new XMLHttpRequest();
-      //var action = "http://localhost:8080/upload.do"; //上传服务的接口地址
-      // xhr.open("POST", action);
-      // xhr.send(form); //发送表单数据
-      // xhr.onreadystatechange = function(){
-      //   if(xhr.readyState==4 && xhr.status==200){
-      //     var resultObj = JSON.parse(xhr.responseText);
-      //     //处理返回的数据......
-      //   }
-      // }
-      confirm_button.disabled = false;
-    // }
-  };
+    confirm_button.disabled = false;
+};
 
 //删除文件操作
 function deleteFile(e) {
-  //e.target.innerHTML = "666";
   let box = e.target.parentNode;
- // console.log(box.parentNode);
   box.innerHTML = "";
   box.parentNode.removeChild(box);
 };
@@ -75,12 +51,10 @@ function update_file_box(e) {
 // 确认添加文件
 function addNewFile(){
   filename = fileShow.value;
- // sendUploadRequest();
   let new_file_object = document.createElement('div');
   let new_file_name = document.createElement('span');
   let delete_button = document.createElement('button');
   let add_file_button = document.createElement('button');
-  //console.log(fileShow.value);
   new_file_name.innerHTML = fileShow.value;
   new_file_object.setAttribute("class", "file");
   delete_button.setAttribute("class", "btn delete");
@@ -116,15 +90,11 @@ function uploadToCompile(){
         var hex = Array.prototype.map.call(result,function(e){
           return (e<16?"0":"")+e.toString(16);
         }).join("");
-        //document.body.insertAdjacentHTML("beforeend","<p>"+hex+"</p>");
-      //  alert(hex);
         sha1_txt = hex;
         console.log(sha1_txt);
     };//end of onload function
     fr.readAsArrayBuffer(this.files[0]);
   };
-// document.querySelector("input").onchange=function(){
-// };
   compile_button.disabled = false;
   download_button.disabled = true;
 };
@@ -154,10 +124,6 @@ function compileFile(){
     contentType: false,
     success: function (data) {
       alert(JSON.stringify(data));
-      //alert(data);
-      //let filehash = data.data.filehash;
-    //   filemap[file.name] = data.data.filehash;
-  //    console.log(filemap[file.name]);
     },
     error: function(data, status){
       alert(status);
@@ -175,12 +141,10 @@ function sendShowDevicesRequest() {
       headers: {
           "Authorization": user_token
       },
-      //contentType: 'application/json',
       dataType: 'json',
       processData: false,
       success: function (data) {
         devices_json = data;
-     //   alert(JSON.stringify(devices_json));
       },
       error: function(data, status){
         alert(status);
@@ -190,8 +154,6 @@ function sendShowDevicesRequest() {
 
 //下载文件到本地
 function downloadZip(){
-
-  //http://kubernetes.tinylink.cn/linklab/compilev2/api/compile/block\?filehash\=
   let download_url_str = 'http://kubernetes.tinylink.cn/linklab/compilev2/api/compile/nonblock\?filehash\='
                        + sha1_txt 
                        + '\&boardtype\=linuxhost'
@@ -200,14 +162,10 @@ function downloadZip(){
   submitFile(download_url_str, "", "TinySimObj.zip");
   $.ajax({
     url: download_url_str,
-    //async: true,
     method: 'GET',
-   // dataType: 'binary',
     processData: false,
     contentType: false,
     success: function (data) {
-      //alert(JSON.stringify(data));
-      //alert(data);
     },
     error: function(data, status){
       alert(status);
@@ -220,13 +178,3 @@ upload_compile_button.addEventListener("click", uploadToCompile);
 confirm_button.addEventListener("click", addNewFile);
 compile_button.addEventListener("click", compileFile);
 download_button.addEventListener("click", downloadZip);
-
-// confirm_button.on('click', function() {
-//   $(this).text("文字改变了");
-// });
-
-// $(function(){
-//   $("#test").click(function(){
-//     $(this).text("666");
-//   });
-// }); 

@@ -1,3 +1,5 @@
+//记录额外使用到的函数
+//sha1加密
 function sha1(data){
     /**************************************************
     Input：Uint8Array
@@ -29,4 +31,5 @@ function sha1(data){
     t=new DataView(new Uint32Array(m).buffer);
     for(var i=0;i<5;i++)m[i]=t.getUint32(i<<2);
     return new Uint8Array(new Uint32Array(m).buffer);
-  };
+};
+

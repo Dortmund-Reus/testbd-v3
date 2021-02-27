@@ -1,7 +1,4 @@
-/*根据id获取对象*/
-// function $(str) {
-//     return document.getElementById(str);
-// }
+//主逻辑
 
 // let addrShow = document.getElementById('addr-show');
 let deviceShow = document.getElementById('device-show');
@@ -29,7 +26,6 @@ function showSites() {
     }
 };
 
-showSites();
 
 /*根据所选城市加载板子列表*/
 function showBoard(obj) {
@@ -113,15 +109,11 @@ function showNodes(obj) {
         }
     }
 }
-
-sendLoginRequest();
-//console.log(user_token);
-
 //建立websocket链接
 
 //var ws = new WebSocket("ws://kubernetes.tinylink.cn/linklab/device-control-v2/user-service/api/ws");
 
-sendWebSocketRequest();
+//sendWebSocketRequest();
 
 //sendShowDevicesRequest();
 //显示所有的设备节点
@@ -146,6 +138,9 @@ function showNodesAll()
         device_id.appendChild(device_idOpt);
     }
 };
+
+showSites();
+sendLoginRequest();
 //获取boardname
 sendShowBoradRequest();
 showBoardAll();
@@ -196,5 +191,4 @@ function showDevice() {
         insertNewRow(new_device_boardName,  new_device_id, new_device_status, new_device_clientId, "");
         mySet.add(new_device_id);
     }
-    // addrShow.value = province[current.prov].name + '-' + province[current.prov]["city"][current.city].name + '-' + province[current.prov]["city"][current.city].districtAndCounty[current.country];
 }

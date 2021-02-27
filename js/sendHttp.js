@@ -16,10 +16,7 @@ function sendLoginRequest(){
         processData: false,
         headers: { "Content-Type": "application/json" },
         success: function (data) {
-      //    alert(JSON.stringify(data));
           user_token = data.data.token;
-          //console.log(data.data.token);
-          //这里的token是string类型的
           console.log(user_token);
         },
         error: function(data, status){
@@ -35,16 +32,6 @@ function sendUploadRequest() {
     input.type = "file";
     input.click();
     input.onchange = function(){
-
-      // let form1 = new FormData();
-      // form1.append('parameters', '{"boardname":"ESP32DevKitC"}');
-      // form1.append("type", "application/json");
-      // let form2 = new FormData();
-      // let file = input.files[0];
-      // fileShow.value = file.name;
-      // form2.append("file", file); //第一个参数是后台读取的请求key值
-      // form2.append("type", "application/octet-stream"); //实际业务的其他请求参数
-
       let form = new FormData();
       let obj =  $("#board-select")[0];
       let val = obj.options[obj.selectedIndex].innerText;
@@ -57,9 +44,6 @@ function sendUploadRequest() {
       fileShow.value = file.name;
       form.append("file", file); //第一个参数是后台读取的请求key值
       form.append("type", "application/octet-stream"); //实际业务的其他请求参数
-     // console.log(form.get("type"));
-
-      //let obj = {form1, form2};
       //为每一个设备进行一次文件的上传
       $.ajax({
         url: "http://kubernetes.tinylink.cn/linklab/device-control-v2/file-cache/api/file",
@@ -69,13 +53,10 @@ function sendUploadRequest() {
           "Authorization": user_token
         },
         dataType: 'json',
-        // data: obj, 
         data: form,
         processData: false,
         contentType: false,
         success: function (data) {
-       //   alert(JSON.stringify(data));
-          //let filehash = data.data.filehash;
           filemap[file.name] = data.data.filehash;
           console.log(filemap[file.name]);
         },
@@ -139,7 +120,6 @@ function sendBurnRequest(){
         },
         error: function(data, status){
           alert(status);
-          //alert("successfully entered the waiting queue!");
         }
     });
 };
@@ -154,18 +134,14 @@ function sendShowBoradRequest() {
         headers: {
             "Authorization": user_token
         },
-        //contentType: 'application/json',
         dataType: 'json',
         processData: false,
         success: function (data) {
           let device_types = data.data.boards;
-        //  alert(JSON.stringify(data));
-       //   console.log(device_types);
           for(let i = 0; i < device_types.length; i++)
           {
             boardNames.push(device_types[i].boardname);
           }
-          //alert(data.data.devices);
         },
         error: function(data, status){
           alert(status);
@@ -174,7 +150,6 @@ function sendShowBoradRequest() {
 };
 
 let url_str = 'http://kubernetes.tinylink.cn/linklab/device-control-v2/user-service/api/device/list\?boardname=all';
-//console.log(str);
 
 //记录收到的设备json数组
 let devices_json;
@@ -187,64 +162,13 @@ function sendShowDevicesRequest() {
         headers: {
             "Authorization": user_token
         },
-        //contentType: 'application/json',
         dataType: 'json',
         processData: false,
         success: function (data) {
           devices_json = data;
-       //   alert(JSON.stringify(devices_json));
         },
         error: function(data, status){
           alert(status);
         }
     });
 }
-//sendShowDevicesRequest();
-let ws_url = "ws://kubernetes.tinylink.cn/linklab/device-control-v2/user-service/api/ws";
-
-
-// function sendWebSocketRequest() {
-//   $.ajax({
-//       url: "http://kubernetes.tinylink.cn/linklab/device-control-v2/user-service/api/ws",
-//       async: false,
-//       method: 'GET',
-//       headers: {
-//           "Authorization": user_token
-//       },
-//       //contentType: 'application/json',
-//       dataType: 'json',
-//       processData: false,
-//       success: function (data) {
-//         devices_json = data;
-//         alert(JSON.stringify(devices_json));
-//       },
-//       error: function(data, status){
-//         alert(status);
-//       }
-//   });
-// }
-
-function sendWebSocketRequest() {
-  let ws = new WebSocket(ws_url, user_token);
-  ws.onopen=function(evt){
-    ws.send(user_token);
-  };
-  ws.onmessage = function(evt) {
-    console.log( "Received Message: " + evt.data);
-    //ws.close();
-  };
-}
-
-// var ws = new WebSocket(ws_url + user_token);
-
-// ws.onopen=function(evt){
-//   ws.send(user_token);
-// };
-
-// ws.onmessage = function(evt) {
-//   console.log( "Received Message: " + evt.data);
-//   //ws.close();
-// };
-
-
-//let val = obj.options[obj.selectedIndex].innerText;

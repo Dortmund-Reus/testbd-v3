@@ -1,35 +1,16 @@
-
 <!DOCTYPE html>
 
 <html lang = "en">
 <head>
     <meta charset="UTF-8">
-    <title>Testing websockets</title>
+    <title>实时日志</title>
 </head>
 <body>
 <div>
     <input type="submit" value="下载日志文件" οnclick="start()" />
 </div>
 <div id="messages"></div>
-<!-- <script src="js/sendHttp.js"></script> -->
 <script type="text/javascript">
-    // var webSocket = new WebSocket('ws://localhost:8888//logserver');
- 
-    // webSocket.onerror = function(event) {
-    //     onError(event)
-    // };
- 
-    // webSocket.onopen = function(event) {
-    //     onOpen(event)
-    // };
- 
-    // webSocket.onmessage = function(event) {
- 
-    //     onMessage(event)
-    // };
-
-    // let afterUrl =  window.location.search.substring(1);
-    // console.log(afterUrl);
 
     let ws_url = "ws://kubernetes.tinylink.cn/linklab/device-control-v2/user-service/api/ws";
     let user_token = window.location.search.substring(1);
@@ -44,27 +25,8 @@
         console.log( "Received Message: " + evt.data);
         document.getElementById('messages').innerHTML
                 += '<br />' + evt.data;
-        //ws.close();
     };
  
-    // function onMessage(event) {
-    //     document.getElementById('messages').innerHTML
-    //             += '<br />' + event.data;
-    // }
- 
-    // function onOpen(event) {
-    //     document.getElementById('messages').innerHTML
-    //             = 'Connection established';
-    // }
- 
-    // function onError(event) {
-    //     alert(event.data);
-    // }
- 
-    // function start() {
-    //     webSocket.send('hello');
-    //     return false;
-    // }
     
 </script>
 
