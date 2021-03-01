@@ -7,11 +7,11 @@
 </head>
 <body>
 <div>
-    <input type="submit" value="下载日志文件" οnclick="start()" />
+    <input type="submit" value="下载日志文件" id="downloadLog" οnclick="start()" />
 </div>
 <div id="messages"></div>
-<script type="text/javascript">
 
+<script type="text/javascript">
     let ws_url = "ws://kubernetes.tinylink.cn/linklab/device-control-v2/user-service/api/ws";
     let user_token = window.location.search.substring(1);
 
@@ -22,12 +22,32 @@
                 = 'Connection established';
     };
     ws.onmessage = function(evt) {
-        console.log( "Received Message: " + evt.data);
+       console.log( "Received Message: " + evt.data);
+        // bugout.log( "Received Message: " + evt.data);
         document.getElementById('messages').innerHTML
                 += '<br />' + evt.data;
     };
- 
     
+</script>
+
+<script type="module">
+    
+    import { Debugout } from './node_modules/debugout.js/dist/debugout.js'
+    const el = (id) => document.getElementById(id);
+
+    el('downloadLog').onclick = () => {
+      let output = bugout.getLog();
+      output += 'bugout.downloadLog();';
+      bugout.downloadLog();
+      displayOutput(output);
+    }
+
+    const bugout = new Debugout();
+
+    // instead of console.log
+   // bugout.log("这是一条日志消息");
+
+    //bugout.downloadLog();
 </script>
 
 </body>
