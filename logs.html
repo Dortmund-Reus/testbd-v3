@@ -11,7 +11,7 @@
 </div>
 <div id="messages"></div>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     let ws_url = "ws://kubernetes.tinylink.cn/linklab/device-control-v2/user-service/api/ws";
     let user_token = window.location.search.substring(1);
 
@@ -28,12 +28,12 @@
                 += '<br />' + evt.data;
     };
     
-</script>
+</script> -->
 
 <script type="module">
     
-    import { Debugout } from './node_modules/debugout.js/dist/debugout.js'
-    const el = (id) => document.getElementById(id);
+     import { Debugout } from './node_modules/debugout.js/dist/debugout.js'
+     const el = (id) => document.getElementById(id);
 
     el('downloadLog').onclick = () => {
       let output = bugout.getLog();
@@ -45,9 +45,25 @@
     const bugout = new Debugout();
 
     // instead of console.log
-   // bugout.log("这是一条日志消息");
+    //bugout.log("这是一条日志消息");
 
-    //bugout.downloadLog();
+   // bugout.downloadLog();
+    let ws_url = "ws://kubernetes.tinylink.cn/linklab/device-control-v2/user-service/api/ws";
+    let user_token = window.location.search.substring(1);
+
+    let ws = new WebSocket(ws_url, user_token);
+    ws.onopen=function(evt){
+        ws.send(user_token);
+        document.getElementById('messages').innerHTML
+                = 'Connection established';
+        bugout.log("Connection established");
+    };
+    ws.onmessage = function(evt) {
+        //console.log( "Received Message: " + evt.data);
+        bugout.log( "Received Message: " + evt.data);
+        document.getElementById('messages').innerHTML
+                += '<br />' + evt.data;
+    };
 </script>
 
 </body>
