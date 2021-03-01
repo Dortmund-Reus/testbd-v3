@@ -36,10 +36,10 @@
      const el = (id) => document.getElementById(id);
 
     el('downloadLog').onclick = () => {
-      let output = bugout.getLog();
-      output += 'bugout.downloadLog();';
+    //   let output = bugout.getLog();
+    //   output += 'bugout.downloadLog();';
       bugout.downloadLog();
-      displayOutput(output);
+    //   displayOutput(output);
     }
 
     const bugout = new Debugout();

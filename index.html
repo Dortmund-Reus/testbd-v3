@@ -170,22 +170,64 @@
                 </div>
             </fieldset>
         </div>
+        <!-- <div class="box_item">
+            <fieldset id="logs">
+                <legend><h3>实时日志</h3></legend>
+                <div id="log_div">
+                    <textarea id="messages" name="story" rows="10" cols="100" readonly="readonly"
+                    style="background-attachment: fixed; background-repeat: no-repeat; border-style: solid; border-color: #FFFFFF">
+                    </textarea>
+                </div> 
+            </fieldset>
+        </div> -->
         <div class="box_item">
             <fieldset id="logs">
                 <legend><h3>实时日志</h3></legend>
-                
+                <!-- <div id="messages"></div> -->
+                <div class="test_box" contenteditable="false" id = "messages"><br /></div>  
             </fieldset>
         </div>
         <div style="margin:0 auto">
             <div style="margin:0 auto">
                 <button class="btn" style="height:40px;width:100px" id="submit" onClick="sendBurnRequest()"><div class="btn_front">确认提交</div></button>
             </div>
-            <div style="margin:0 auto">
-                <button class="btn" style="height:40px;width:100px" id="log" onClick="viewLogs()"><div class="btn_front">查看日志</div></button>
+                <button class="btn" style="height:40px;width:100px" id="downloadLogs"><div class="btn_front">下载日志</div></button>
             </div>
         </div>
         
     </div>
+    <script type="module">
+    
+        import { Debugout } from './node_modules/debugout.js/dist/debugout.js'
+        const el = (id) => document.getElementById(id);
+   
+        el('downloadLogs').onclick = () => {
+            bugout.downloadLog();
+        }
+   
+        const bugout = new Debugout();
+
+        let ws_url = "ws://kubernetes.tinylink.cn/linklab/device-control-v2/user-service/api/ws";
+
+        let ws = new WebSocket(ws_url, user_token);
+      //  console.log(user_token);
+        ws.onopen=function(evt){
+            ws.send(user_token);
+            document.getElementById('messages').innerHTML
+                    = 'Connection established';
+            bugout.log("Connection established");
+        };
+        let sr = el("messages");
+        ws.onmessage = function(evt) {
+            //console.log( "Received Message: " + evt.data);
+            bugout.log( "Received Message: " + evt.data);
+            document.getElementById('messages').innerHTML
+                    += '<br />' + evt.data;
+            
+            sr.scrollTop = sr.scrollHeight;   // 内容滚动到最后一行
+        };
+
+   </script>
     <script src="js/functions.js"></script>
     <script src="js/binarytransport.js"></script>
     <script src="js/upload.js"></script>

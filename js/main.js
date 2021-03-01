@@ -7,6 +7,9 @@ let site = document.getElementById('site');
 let board = document.getElementById('board');
 let device_id = document.getElementById('device_id');
 
+// let log_area = document.getElementsByClassName('test_box')[0];
+// log_area.attr("readonly", "readonly");
+
 /*用于保存当前所选的各个状态*/
 let current = {
     site: '',
