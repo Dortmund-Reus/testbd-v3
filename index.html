@@ -19,7 +19,8 @@
         <!-- 设备选择 -->
         <div class="box_item">
             <fieldset id=select_device>
-                <h3 class="box_item_top">选择设备</h3>
+                <legend><h3>选择设备</h3></legend>
+                <!-- <h3 class="box_item_top">选择设备</h3> -->
                 <form action="#" class="box_item_main">
                     <label for="device-show" class="box_item_main_label">所选设备：
                         <input type="text" value="" id="device-show" style="height:25px" >
@@ -59,7 +60,8 @@
         <!-- 已选择的设备列表 -->
         <div class="box_item">
             <fieldset id="device_list">
-                <h3 class="box_item_top">已选择设备列表</h3>
+                <legend><h3>已选择设备列表</h3></legend>
+                <!-- <h3 class="box_item_top">已选择设备列表</h3> -->
                 <label for="nodes-show">
                     <div class="box_item2_main_item">
                         <div class="box_item2_main_item_title">选择设备节点:</div>
@@ -103,7 +105,8 @@
         <!-- 已上传的文件列表 -->
         <div class="box_item">
             <fieldset id="upload_list">
-                <h3 class="box_item_top"> 已上传的文件列表</h3>
+                <legend><h3> 已上传的文件列表</h3></legend>
+                <!-- <h3 class="box_item_top"> 已上传的文件列表</h3> -->
                 <div >
                     <label for="board-select">
                         <div class="box_item2_main_item">
@@ -121,7 +124,8 @@
                         </div>
                     </label>
                     <div class="line-20"></div>
-                    <div style="margin-left:20%"> <button type="button" class="btn" id="upload_burn">
+                    <div style="margin-left:20%"> 
+                        <button type="button" class="btn" id="upload_burn">
                             <div class="btn_front">上传文件</div>
                         </button>
                         <button type="button" class="btn add" id="add_confirm">
@@ -133,7 +137,8 @@
         <!-- tinysim的编译 -->
         <div class="box_item">
             <fieldset id="compile">
-                <h3 class="box_item_top"> Tinysim源码编译</h3>
+                <legend><h3> Tinysim源码编译</h3></legend>
+                <!-- <h3 class="box_item_top"> Tinysim源码编译</h3> -->
                 <div >
                     <!-- <label for="board-select">
                         <div class="box_item2_main_item">
@@ -163,6 +168,12 @@
                         </button>
                     </div>
                 </div>
+            </fieldset>
+        </div>
+        <div class="box_item">
+            <fieldset id="logs">
+                <legend><h3>实时日志</h3></legend>
+                
             </fieldset>
         </div>
         <div style="margin:0 auto">
