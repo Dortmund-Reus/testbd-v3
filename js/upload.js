@@ -25,16 +25,16 @@ function deleteFile(e) {
 };
 
 //开始烧写操作
-function startBurn() {
-  if(tmp.length == 0){
-    alert("烧写队列中没有设备!");
-  }
-  else {
-    //alert(tmp);
-    sendBurnRequest();
-  }  
-  tmp = "";
-}
+// function startBurn() {
+//   if(tmp.length == 0){
+//     alert("烧写队列中没有设备!");
+//   }
+//   else {
+//     //alert(tmp);
+//     sendBurnRequest();
+//   }  
+//   tmp = "";
+// }
 
 function update_file_box(e) {
   let tag = e.target.parentNode.children[0].innerText;
@@ -102,11 +102,13 @@ function uploadToCompile(){
 
 function compileFile(){
   let form = new FormData();
-  let obj =  $("#board-select")[1];
+  let obj =  $("#board-select2")[0];
   //let val = obj.options[obj.selectedIndex].innerText;
-  let board_type = "linuxhost";
-  let compile_type = "tinysim";
-  console.log(board_type);
+  //console.log("你选择的boardType是" + val);
+ // console.log("对应的compileType是" + deviceMap.get(val));
+  let board_type = obj.options[obj.selectedIndex].innerText;
+  let compile_type = deviceMap.get(board_type);
+  //console.log(board_type);
   let str = '{"filehash":"' + sha1_txt + '", "boardType":"'+ board_type + '", "compileType":"' + compile_type + '"}';
   console.log(str);
   form.append('parameters', str);
@@ -154,12 +156,17 @@ function sendShowDevicesRequest() {
 
 //下载文件到本地
 function downloadZip(){
+  let obj =  $("#board-select2")[0];
+  let board_type = obj.options[obj.selectedIndex].innerText;
+  let compile_type = deviceMap.get(board_type);
   let download_url_str = 'http://kubernetes.tinylink.cn/linklab/compilev2/api/compile/nonblock\?filehash\='
                        + sha1_txt 
-                       + '\&boardtype\=linuxhost'
-                       + '\&compiletype\=tinysim';
+                       + '\&boardtype\=' + board_type
+                       + '\&compiletype\=' + compile_type;
   console.log(download_url_str);
-  submitFile(download_url_str, "", "TinySimObj.zip");
+  let board_name = deviceMap2.get(board_type);
+  //let downLoadFileName = board_type + "Obj.zip";
+  submitFile(download_url_str, "", board_name);
   $.ajax({
     url: download_url_str,
     method: 'GET',

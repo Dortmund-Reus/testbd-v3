@@ -59,7 +59,7 @@ $.ajaxTransport("+binary", function(options, originalOptions, jqXHR){
 });
 
 //不下载文件，而是将文件直接传给接口
-function submitFile(url, headers, filename) {
+function submitFile(url, headers, boradname) {
 return $.ajax({
   url:url,
   dataType:"binary",
@@ -67,14 +67,17 @@ return $.ajax({
   headers:headers
 })
 .then(function handleFile(data) {
-    console.log(this.response || data);
-    console.log(typeof(data));
-    let myfile = new File([data], "TinySim.zip", {type: 'application/octet-stream'});
+    //console.log(this.response || data);
+    //console.log(typeof(data));
+    let filename = boradname + "Obj.zip";
+    let myfile = new File([data], filename, {type: 'application/octet-stream'});
     console.log(typeof(this.response));
     //let binary_file = data;
     var file = URL.createObjectURL(this.response || data);
     let form = new FormData();
-    let str = '{"boardname":"TinySim"}';
+    //let str = '{"boardname":"DeveloperKit"}';
+    
+    let str = '{"boardname":"' + boradname + '"}';
     console.log(str);
     form.append('parameters', str);
     form.append("type", "application/json");

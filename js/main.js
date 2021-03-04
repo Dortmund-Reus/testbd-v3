@@ -54,13 +54,6 @@ function showBoard(obj) {
 
 //显示所有的板子类型
 function showBoardAll() {
-    // let val = obj.options[obj.selectedIndex].value;
-    // if (val != current.site) {
-    //     current.site = val;
-    //     deviceShow.value = '';
-    //     add_dev_btn.disabled = true;
-    // }
-   // add_dev_btn.disabled = true;
     let len = boardNames.length;
     for (let i = 0; i < len; i++) {
         let boardOpt = document.createElement('option');
@@ -75,6 +68,24 @@ function showBoardAll() {
         boardOpt.value = i;
         $("#board-select")[0].appendChild(boardOpt);
     }
+
+
+    let count = 0;
+    deviceMap.forEach((element, key) =>{
+        //console.log(key + " " + element);
+        let boardOpt = document.createElement('option');
+        boardOpt.innerText = key;
+        boardOpt.value = count;
+        ++count;
+        $("#board-select2")[0].appendChild(boardOpt);
+    });
+    // let len2 =  deviceMap.length;
+    // for (let i = 0; i < len2; i++) {
+    //     let boardOpt = document.createElement('option');
+    //     boardOpt.innerText = boardNames[i];
+    //     boardOpt.value = i;
+    //     $("#board-select2")[0].appendChild(boardOpt);
+    // }
 };
 
 //实时记录选中的设备序号
