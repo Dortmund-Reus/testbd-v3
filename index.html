@@ -201,11 +201,16 @@
         import { Debugout } from './node_modules/debugout.js/dist/debugout.js'
         const el = (id) => document.getElementById(id);
    
+        let debugouts = [];
         el('downloadLogs').onclick = () => {
-            bugout.downloadLog();
+            debugouts.forEach((s) => {
+                s.downloadLog();
+            });
+            //bugout.downloadLog();
         }
    
-        const bugout = new Debugout();
+        //const bugout = new Debugout();
+       // bugout.logFilename = "a.txt"; // just for test
 
         let ws_url = "ws://kubernetes.tinylink.cn/linklab/device-control-v2/user-service/api/ws";
 
@@ -215,12 +220,45 @@
             ws.send(user_token);
             document.getElementById('messages').innerHTML
                     = 'Connection established';
-            bugout.log("Connection established");
+           // bugout.log("Connection established");
         };
         let sr = el("messages");
+
+        
         ws.onmessage = function(evt) {
-            //console.log( "Received Message: " + evt.data);
-            bugout.log( "Received Message: " + evt.data);
+            let json_obj = eval("(" + evt.data + ")");
+            let msg_type = json_obj.data.type;
+            //分三种情况:
+            //1.TaskAllocateMsg  -->  TaskAllocateMsg
+            //2.TaskLogMsg  -->  TaskLogMsg
+            //3.TaskEndMsg  -->  TaskEndRunMsg
+            if(msg_type == "TaskAllocateMsg"){
+                let a = json_obj.data.data.deviceid;
+                //如果是第一条发回来的数据，应该据此生成一个debugout对象
+                const bugout = new Debugout;
+                //设置该bugout对象的文件名
+                bugout.logFilename = JSON.stringify(a) + ".txt";
+                debugouts.push(bugout);
+                bugout.log("Received Message: " + evt.data);
+                //console.log(JSON.stringify(a));
+            } else {
+                //如果是后续的数据，就写入对应的文件里面去
+                //根据taskIndex判断是哪个debugout对象
+                let i = json_obj.data.taskindex - 1;
+               // console.log(typeof(i));
+                // i = taskIndex - 1即为数组下标
+                debugouts[i].log("Received Message: " + evt.data);
+            }
+            
+            // //对于接受到的信息，应该分两种情形来处理
+            // if(a == null){
+                
+            // } else {
+                
+            // }
+            //另外，有json_obj.data.data不存在的情况
+            
+            
             document.getElementById('messages').innerHTML
                     += '<br />' + evt.data;
             

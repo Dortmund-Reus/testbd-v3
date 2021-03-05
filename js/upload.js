@@ -134,25 +134,25 @@ function compileFile(){
   download_button.disabled = false;
 };
 
-//显示设备列表————已测试
-function sendShowDevicesRequest() {
-  $.ajax({
-      url: url_str,
-      async: false,
-      method: 'GET',
-      headers: {
-          "Authorization": user_token
-      },
-      dataType: 'json',
-      processData: false,
-      success: function (data) {
-        devices_json = data;
-      },
-      error: function(data, status){
-        alert(status);
-      }
-  });
-}
+// //显示设备列表————已测试
+// function sendShowDevicesRequest() {
+//   $.ajax({
+//       url: url_str,
+//       async: false,
+//       method: 'GET',
+//       headers: {
+//           "Authorization": user_token
+//       },
+//       dataType: 'json',
+//       processData: false,
+//       success: function (data) {
+//         devices_json = data;
+//       },
+//       error: function(data, status){
+//         alert(status);
+//       }
+//   });
+// }
 
 //下载文件到本地
 function downloadZip(){

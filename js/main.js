@@ -160,6 +160,12 @@ sendShowBoradRequest();
 showBoardAll();
 showNodesAll();
 
+
+// var test_str="Received Message: {"code":0,"type":"TaskMsg","timestamp":1614872960830768908,"data":{"data":{"ctimestamp":"1614872960824263927","dtimestamp":"1614872960830245866"},"groupid":"f1ec3676c94a8974c66ed25058d0d356027c73690b82c942160c08def2421854","msg":"config file load complete\n","taskindex":2,"type":"TaskLogMsg"}}"
+// test_str=test_str.replace("Received Message:","");     // heoWorld!
+// console.log(test_str);
+
+
 /*选择节点之后的处理函数*/
 function selectNodes(obj) {
     current.device_id = obj.options[obj.selectedIndex].innerText;

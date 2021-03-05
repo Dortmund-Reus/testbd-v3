@@ -68,11 +68,11 @@ function sendUploadRequest() {
 };
 
 //查看日志请求
-function viewLogs(){
-  let log_url = "logs.html?" + user_token;
-  window.open(log_url, "_blank");
+// function viewLogs(){
+//   let log_url = "logs.html?" + user_token;
+//   window.open(log_url, "_blank");
   
-}
+// }
 
 //发送烧写任务提交请求————已测试
 function sendBurnRequest(){
@@ -137,6 +137,8 @@ function sendShowBoradRequest() {
         dataType: 'json',
         processData: false,
         success: function (data) {
+         // console.log("666");
+         // console.log(JSON.stringify(data));
           let device_types = data.data.boards;
           for(let i = 0; i < device_types.length; i++)
           {
