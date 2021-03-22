@@ -23,7 +23,7 @@ function sendLoginRequest(){
           alert(status);
         }
     });
-};
+}
 
 let filemap = {};//用于存储文件名和hash值的对应关系
 //发送烧写文件上传请求——已完成
@@ -65,7 +65,7 @@ function sendUploadRequest() {
         }
     });
   }
-};
+}
 
 //查看日志请求
 // function viewLogs(){
@@ -122,7 +122,7 @@ function sendBurnRequest(){
           alert(status);
         }
     });
-};
+}
 
 let boardNames = [];
 //显示系统支持的设备种类————已测试
@@ -149,7 +149,7 @@ function sendShowBoradRequest() {
           alert(status);
         }
     });
-};
+}
 
 let url_str = 'http://kubernetes.tinylink.cn/linklab/device-control-v2/user-service/api/device/list\?boardname=all';
 

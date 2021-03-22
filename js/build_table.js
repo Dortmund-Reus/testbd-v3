@@ -42,8 +42,10 @@ function update_input_box(e) {
     if($('#files-show').val() != ""){
         $add_firmware_btn[0].disabled = false;
     }
-    
 }
+
+
+
 
 //插入一个新行
 function insertNewRow(type, device_id, status, group, firmware) {

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>treeviewDemo</title>
+    <link href="./css/bootstrap-3.3.7.css" rel="stylesheet">
+    <script src = "./js/jquery.js"></script>
+  	<script src = "./js/bootstrap-treeview.js"></script>
+    <script src = "./js/test.js"></script>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <hr>
+        <h2>Checkable Tree</h2>
+        <div class="col-sm-4">
+          <h2>Input</h2>
+          <div class="form-group">
+            <label for="input-check-node" class="sr-only">Search Tree:</label>
+            <input type="input" class="form-control" id="input-check-node" placeholder="Identify node..." value="Parent 1">
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" class="checkbox" id="chk-check-silent" value="false">
+              Silent (No events)
+            </label>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-6">
+              <button type="button" class="btn btn-success check-node" id="btn-check-node">选中红色节点</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-danger" id="btn-uncheck-all">取消所有节点</button>
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-primary" id="btn-add-checked">添加所选设备</button>
+          </div>
+          <hr>
+        </div>
+        <div class="col-sm-4">
+          <h2>Tree</h2>
+          <div id="treeview"></div>
+        </div>
+        <div class="col-sm-4">
+          <h2>Events</h2>
+          <div id="checkable-output"></div>
+        </div>
+      </div>
+</div>
+
+<script type="text/javascript">
+
+    // $(function(){...})这个是在页面DOM文档加载完成后加载执行的，等效于$(document).ready(function(){...});
+    // 优于window.onload，后者必须等到页面内包括图片的所有元素加载完毕后才能执行
+
+    $(function () {
+
+        //第一步是获取user_token
+
+        let device_set = new Set();
+
+        let $my_tree = $('#treeview').treeview({
+            data: tree_view,
+
+            //展开节点时的操作
+            onNodeExpanded: function (event, node) {
+                if(node.tags != ["busy"] && node.tags != ["free"]){
+                    //如果不是叶子节点,即tags不为busy or free , 则加载子节点
+                    //这里我们采用动态加载的机制
+                    //采用动态加载好像出现了一些问题
+                    if(node.nodes.length == 0)
+                    {
+                        showNodes(node);
+                    }
+                    
+                }
+                console.log(node.text + " was expanded.");
+            },
+
+            //收起节点时的操作
+            onNodeCollapsed: function(event, node) {
+                // $('#expandible-output').prepend('<p>' + node.text + ' was collapsed</p>');
+                //这一步出现了删掉图标的问题
+                // $("#treeview").treeview("deleteChildrenNode", node.nodeId);
+                console.log(node.text + " was collapsed.");
+            },
+
+            //选中节点时的操作
+            onNodeChecked: function(event, node) {
+                //console.log("You choose node " + node.text);
+                //加入最后的集合里面
+                device_set.add(node.text);
+                $('#checkable-output').prepend('<p>' + node.text + ' was checked</p>');
+                $('#checkable-output').prepend('<p>' + device_set.size + '</p>');
+            },
+
+            //取消选中时的操作
+            onNodeUnchecked: function(event, node){
+                //console.log(node.text + " was unchecked.");
+                $('#checkable-output').prepend('<p>' + node.text + ' was unchecked</p>');
+
+                device_set.delete(node.text);
+                $('#checkable-output').prepend('<p>' + device_set.size + '</p>');
+            },
+        });
+
+        var findCheckableNodess = function() {
+          return $my_tree.treeview('search', [ $('#input-check-node').val(), { ignoreCase: false, exactMatch: false } ]);
+        };
+        var checkableNodes = findCheckableNodess();
+
+        // Check/uncheck/toggle nodes
+        $('#input-check-node').on('keyup', function (e) {
+          checkableNodes = findCheckableNodess();
+          $('.check-node').prop('disabled', !(checkableNodes.length >= 1));
+        });
+
+        $('#btn-check-node.check-node').on('click', function (e) {
+          $my_tree.treeview('checkNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+        });
+
+        $('#btn-uncheck-node.check-node').on('click', function (e) {
+          $my_tree.treeview('uncheckNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+        });
+
+        $('#btn-toggle-checked.check-node').on('click', function (e) {
+          $my_tree.treeview('toggleNodeChecked', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+        });
+
+        // Check/uncheck all
+        $('#btn-check-all').on('click', function (e) {
+          $my_tree.treeview('checkAll', { silent: $('#chk-check-silent').is(':checked') });
+        });
+
+        $('#btn-uncheck-all').on('click', function (e) {
+          $my_tree.treeview('uncheckAll', { silent: $('#chk-check-silent').is(':checked') });
+          device_set.clear();
+        });
+
+        $('#btn-add-checked').on('click', function (e) {
+            //应当执行我们自定义的逻辑
+            device_set.forEach(function(value) {
+                console.log(value);
+            });
+          //  console.log(devices);
+        });
+    });
+
+
+</script>
+</body>
+</html>

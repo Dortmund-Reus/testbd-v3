@@ -7,7 +7,7 @@
 textarea{
     resize: none;
 }
-.test_box {     
+.my_test_box {     
     width: 100%;     
     min-height: 20px;     
     max-height: 300px;     
@@ -29,11 +29,11 @@ textarea{
 }    
 
 
-.top{
+.my_top{
     margin: 20px 0px;
     text-align: center;
 }
-.box_container{
+.my_box_container{
     margin: 30px;
     border-radius: 10px;
     border: 1px solid #1ABC9C;
@@ -41,15 +41,15 @@ textarea{
     display: flex;
     flex-direction: column;
 }
-.box_item{
+.my_box_item{
     margin-left: 10%;
 }
-.box_item_top{
+.my_box_item_top{
     padding: 10px 0px 20px 0px;
     text-align: left;
 }
 
-.box_item_main{
+.my_box_item_main{
     margin-left:20%;
 }
 
@@ -84,10 +84,10 @@ fieldset#logs {
     width: 80%;
 } 
 
-.box_item2_main_item{
+.my_box_item2_main_item{
     display: flex;
 }
-.box_item2_main_item_title{
+.my_box_item2_main_item_title{
     text-align: right;
     width: 30%;
     position: relative;
@@ -103,7 +103,11 @@ fieldset#logs {
     text-align: center;
 }
 
-.btn {
+/* button {
+    inherits: ;
+} */
+
+.my_btn {
     /* width: 100px; */
     height: 30px;
     border-radius: 4px;
@@ -117,16 +121,16 @@ fieldset#logs {
     border-radius: 5px;
     /* margin-top: 10px; */
 }
-.btn_front{
+.my_btn_front{
     position: relative;
     top:-3px !important;
 }
-.btn#submit{
+.my_btn#submit{
     width: 120px;
     height: 50px;
 }
 
-.btn:disabled{
+.my_btn:disabled{
     background-color:#ccc;
 }
 
@@ -234,7 +238,7 @@ caption {
 
 /*这里是获取标签的部分*/
 *{margin: 0;padding: 0;list-style-type: none;text-decoration: none;}
-.box{width: 60%;margin: auto;}
+.my_box{width: 60%;margin: auto;}
 .bootstrap-tagsinput {
   background-color: white;
   border: 2px solid #ebedef;

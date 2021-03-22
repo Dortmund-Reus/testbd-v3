@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>项目总览与创建</title>
+    <link href="./css/bootstrap-3.3.7.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <script src="js/jquery-3.5.1.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <hr>
+            <h2>New Project</h2>
+            <div class="col-sm-4">
+              <h3>Input Project Name</h3>
+              <div class="form-group">
+                <label for="input-check-node" class="sr-only">Search Tree:</label>
+                <input type="input" class="form-control" id="input-check-node" placeholder="Identify node..." value="Demo 1">
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6">
+                  <button type="button" class="btn btn-success check-node" id="btn-check-node">Create</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+                <h3>Events</h3>
+                <div id="checkable-output"></div>
+            </div>
+        </div>
+        <div class="row">
+            <hr>
+            <h2>Projects</h2>
+            <table>
+                <thead>
+                    <tr class="table_header">
+                        <th>Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="table_data"></tbody>
+            </table>
+        </div>
+    </div>
+    <style>
+        * { 
+            padding: 0; 
+            margin: 0; 
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: 1px solid #c0c0c0;
+        }
+        th,td {
+            border: 1px solid #d0d0d0;
+            color: #404060;
+            padding: 10px;
+        }
+        th {
+            background-color: green;
+            font: bold 16px "微软雅黑";
+            color: #fff;
+        }
+        td {
+            font: 14px "微软雅黑";
+        }
+        tbody tr {
+            background-color: #f0f0f0;
+        }
+        tbody tr:hover {
+            cursor: pointer;
+            background-color: #fafafa;
+        }
+        a{
+            color: #47C6DB;
+        }
+    </style>
+
+    <script type="text/javascript">    
+    var data = [{
+                name: "Demo 1",
+                staus: "active",
+            },{
+                name: "Demo 2",
+                staus: "active",
+            },{
+                name: "Demo 3",
+                staus: "inactive",
+            }];
+
+    //点击project之后，跳转到对应的界面
+    function view_project(e) {
+        let status = e.target.parentNode.children[1].innerText;
+        console.log(status);
+        if(status == "active")
+        {
+
+        }
+        else
+        {
+            window.open("index.html");
+        }
+        
+    }
+
+    function build_table(data)
+    {
+        //清空所有的子节点
+        $("#table_data").empty();
+        for( var i = 0; i < data.length; i++ ) {
+            //动态创建一个tr行标签,并且转换成jQuery对象
+            var $trTemp = $("<tr></tr>");
+            //往行里面追加 td单元格
+            $trTemp.append("<td>"+ data[i].name +"</td>");
+            $trTemp.append("<td>"+ data[i].staus +"</td>");
+            $trTemp.appendTo("#table_data");
+            //console.log(($trTemp[0].children[0]));
+            $trTemp[0].children[0].addEventListener("click", view_project);
+            // $trTemp.addEventListener("click", view_project);
+        }
+    }
+
+    $(function () {
+        $('#btn-check-node.check-node').on('click', function (e) {
+            $('#checkable-output').prepend('<p> Project ' + $('#input-check-node').val() + ' was created.</p>');
+        });
+        
+        build_table(data);
+    });
+    
+    </script>
+</body>
+
+</html>

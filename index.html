@@ -4,8 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>设备添加与文件烧写</title>
+    <!-- <link href="./css/bootstrap-3.3.7.css" rel="stylesheet"> -->
+    <link href="./css/bootstrap-3.3.7.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="js/jquery-3.5.1.js"></script>
+
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
     <script src="js/tagsinput.js" type="text/javascript" charset="utf-8"></script>
@@ -13,20 +16,59 @@
 
 <body>
     <!-- 顶部 -->
-    <h2 class="top">设备烧写</h2>
+    <h2 class="my_top">设备烧写</h2>
     <!-- 主体 -->
     <div class="box_container">
+        <div class="container">
+            <div class="row">
+                <hr>
+                <h2>Checkable Tree</h2>
+                <div class="col-sm-4">
+                  <h2>Input</h2>
+                  <div class="form-group">
+                    <label for="input-check-node" class="sr-only">Search Tree:</label>
+                    <input type="input" class="form-control" id="input-check-node" placeholder="Identify node..." value="Parent 1">
+                  </div>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" class="checkbox" id="chk-check-silent" value="false">
+                      Silent (No events)
+                    </label>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-6">
+                      <button type="button" class="btn btn-success check-node" id="btn-check-node">选中红色节点</button>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-danger" id="btn-uncheck-all">取消所有节点</button>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary" id="btn-add-checked">添加所选设备</button>
+                  </div>
+                  <hr>
+                </div>
+                <div class="col-sm-4">
+                  <h2>Tree</h2>
+                  <div id="treeview"></div>
+                </div>
+                <div class="col-sm-4">
+                  <h2>Events</h2>
+                  <div id="checkable-output"></div>
+                </div>
+              </div>
+        </div>
         <!-- 设备选择 -->
-        <div class="box_item">
+        <div class="my_box_item">
             <fieldset id=select_device>
                 <legend><h3>选择设备</h3></legend>
-                <!-- <h3 class="box_item_top">选择设备</h3> -->
-                <form action="#" class="box_item_main">
-                    <label for="device-show" class="box_item_main_label">所选设备：
+                
+                <form action="#" class="my_box_item_main">
+                    <label for="device-show" class="my_box_item_main_label">所选设备：
                         <input type="text" value="" id="device-show" style="height:25px" >
                     </label>
                     <div class="line-20"></div>
-                    <!--城市选择-->
+                   
                     <label for="device-show">城市选择：
                         <select id="site" onchange="showBoard(this)">
                             <option>Sites</option>
@@ -34,7 +76,7 @@
                     </label>
                     <br />
                     <div class="line-20"></div>
-                    <!--板子选择-->
+                  
                     <label for="device-show">选择板子：
                         <select id="board" onchange="showNodes(this)">
                             <option>Architecures</option>
@@ -42,7 +84,7 @@
                     </label>
                     <br />
                     <div class="line-20"></div>
-                    <!--节点选择-->
+                 
                     <label for="device-show">选择节点：
                         <select id="device_id" onchange="selectNodes(this)">
                             <option>Nodes</option>
@@ -50,24 +92,24 @@
                     </label>
                     <br />
                     <div class="line-20"></div>
-                    <button type="button" class="btn" onClick="showDevice()">
-                        <div class="btn_front add">添加设备</div>
+                    <button type="button" class="btn btn-success" onClick="showDevice()">
+                        <div class="my_btn_front add">添加设备</div>
                     </button>
                 </form>
 
             </fieldset>
         </div>
         <!-- 已选择的设备列表 -->
-        <div class="box_item">
+        <div class="my_box_item">
             <fieldset id="device_list">
                 <legend><h3>已选择设备列表</h3></legend>
-                <!-- <h3 class="box_item_top">已选择设备列表</h3> -->
+                <!-- <h3 class="my_box_item_top">已选择设备列表</h3> -->
                 <label for="nodes-show">
-                    <div class="box_item2_main_item">
-                        <div class="box_item2_main_item_title">选择设备节点:</div>
+                    <div class="my_box_item2_main_item">
+                        <div class="my_box_item2_main_item_title">选择设备节点:</div>
                         <!-- <input type="text" id="device-show"> -->
-                        <div class="box">
-                            <div class="tagsinput-primary form-group">
+                        <div class="my_box">
+                            <div class="tagsinput-primary">
                                 <input data-role="tagsinput" id="nodes-show" />
                             </div>
                         </div>
@@ -76,21 +118,21 @@
                 <br/>
 
                 <label for="nodes-show">
-                    <div class="box_item2_main_item">
-                        <div class="box_item2_main_item_title">选择firmware:</div>
+                    <div class="my_box_item2_main_item">
+                        <div class="my_box_item2_main_item_title">选择firmware:</div>
                         <!-- <input type="text" id="device-show"> -->
-                        <div class="box">
-                            <div class="tagsinput-primary form-group">
+                        <div class="my_box">
+                            <div class="tagsinput-primary">
                                 <input data-role="tagsinput" id="files-show" />
                                 <div class="line-20"></div>
-                                <button type="button" class="btn" id="add_firmware">
-                                    <div class="btn_front">添加firmware</div>
+                                <button type="button" class="my_btn" id="add_firmware">
+                                    <div class="my_btn_front">添加firmware</div>
                                 </button>
-                                <button type="button" class="btn" id="delete_device">
-                                    <div class="btn_front">删除所选设备</div>
+                                <button type="button" class="my_btn" id="delete_device">
+                                    <div class="my_btn_front">删除所选设备</div>
                                 </button>
-                                <button type="button" class="btn" id="reset">
-                                    <div class="btn_front">重新选择设备</div>
+                                <button type="button" class="my_btn" id="reset">
+                                    <div class="my_btn_front">重新选择设备</div>
                                 </button>
                             </div>
                         </div>
@@ -103,14 +145,14 @@
             </fieldset>
         </div>
         <!-- 已上传的文件列表 -->
-        <div class="box_item">
+        <div class="my_box_item">
             <fieldset id="upload_list">
                 <legend><h3> 已上传的文件列表</h3></legend>
-                <!-- <h3 class="box_item_top"> 已上传的文件列表</h3> -->
+                <!-- <h3 class="my_box_item_top"> 已上传的文件列表</h3> -->
                 <div >
                     <label for="board-select">
-                        <div class="box_item2_main_item">
-                            <div class="box_item2_main_item_title">设备架构类型:</div>
+                        <div class="my_box_item2_main_item">
+                            <div class="my_box_item2_main_item_title">设备架构类型:</div>
                             <select id="board-select">
                                 <option>Architecures</option>
                             </select>
@@ -118,31 +160,30 @@
                     </label>
                     </br>
                     <label for="file-show">
-                        <div class="box_item2_main_item">
-                            <div class="box_item2_main_item_title">您要上传的是:</div>
+                        <div class="my_box_item2_main_item">
+                            <div class="my_box_item2_main_item_title">您要上传的是:</div>
                             <input type="text" id="file-show">
                         </div>
                     </label>
                     <div class="line-20"></div>
                     <div style="margin-left:20%"> 
-                        <button type="button" class="btn" id="upload_burn">
-                            <div class="btn_front">上传文件</div>
+                        <button type="button" class="my_btn" id="upload_burn">
+                            <div class="my_btn_front">上传文件</div>
                         </button>
-                        <button type="button" class="btn add" id="add_confirm">
-                            <div class="btn_front">确认添加</div>
+                        <button type="button" class="my_btn add" id="add_confirm">
+                            <div class="my_btn_front">确认添加</div>
                         </button></div>
                 </div>
             </fieldset>
         </div>
         <!-- tinysim的编译 -->
-        <div class="box_item">
+        <div class="my_box_item">
             <fieldset id="compile">
                 <legend><h3> Tinysim源码编译</h3></legend>
-                <!-- <h3 class="box_item_top"> Tinysim源码编译</h3> -->
                 <div >
                     <label for="board-select2">
-                        <div class="box_item2_main_item">
-                            <div class="box_item2_main_item_title">设备架构类型:</div>
+                        <div class="my_box_item2_main_item">
+                            <div class="my_box_item2_main_item_title">设备架构类型:</div>
                             <select id="board-select2">
                                 <option>Architecures</option>
                             </select>
@@ -150,27 +191,39 @@
                     </label>
                     </br>
                     <label for="file-show">
-                        <div class="box_item2_main_item">
-                            <div class="box_item2_main_item_title">您要上传的是:</div>
+                        <div class="my_box_item2_main_item">
+                            <div class="my_box_item2_main_item_title">您要上传的是:</div>
                             <input type="text" id="tinysim-file-show">
                         </div>
                     </label>
                     <div class="line-20"></div>
                     <div style="margin-left:20%"> 
-                        <button type="button" class="btn" id="upload_compile">
-                            <div class="btn_front">上传源码</div>
+                        <!-- <button type="button" class="my_btn" id="upload_compile">
+                            <div class="my_btn_front">上传源码</div>
                         </button>
-                        <button type="button" class="btn" id="compile_btn">
-                            <div class="btn_front">开始编译</div>
+                        <button type="button" class="my_btn" id="compile_btn">
+                            <div class="my_btn_front">开始编译</div>
                         </button>
-                        <button type="button" class="btn" id="download_btn">
-                            <div class="btn_front">上传文件</div>
-                        </button>
+                        <button type="button" class="my_btn" id="download_btn">
+                            <div class="my_btn_front">上传文件</div>
+                        </button> -->
+
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                              <button type="button" class="btn btn-success check-node" id="upload_compile">上传源码</button>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <button type="button" class="btn btn-danger" id="compile_btn">开始编译</button>
+                          </div>
+                          <div class="form-group">
+                            <button type="button" class="btn btn-primary" id="download_btn">上传文件</button>
+                          </div>
                     </div>
                 </div>
             </fieldset>
         </div>
-        <!-- <div class="box_item">
+        <!-- <div class="my_box_item">
             <fieldset id="logs">
                 <legend><h3>实时日志</h3></legend>
                 <div id="log_div">
@@ -180,18 +233,18 @@
                 </div> 
             </fieldset>
         </div> -->
-        <div class="box_item">
+        <div class="my_box_item">
             <fieldset id="logs">
                 <legend><h3>实时日志</h3></legend>
                 <!-- <div id="messages"></div> -->
-                <div class="test_box" contenteditable="false" id = "messages"><br /></div>  
+                <div class="my_test_box" contenteditable="false" id = "messages"><br /></div>  
             </fieldset>
         </div>
         <div style="margin:0 auto">
             <div style="margin:0 auto">
-                <button class="btn" style="height:40px;width:100px" id="submit" onClick="sendBurnRequest()"><div class="btn_front">确认提交</div></button>
+                <button class="my_btn" style="height:40px;width:100px" id="submit" onClick="sendBurnRequest()"><div class="my_btn_front">确认提交</div></button>
             </div>
-                <button class="btn" style="height:40px;width:100px" id="downloadLogs"><div class="btn_front">下载日志</div></button>
+                <button class="my_btn" style="height:40px;width:100px" id="downloadLogs"><div class="my_btn_front">下载日志</div></button>
             </div>
         </div>
         
@@ -265,14 +318,126 @@
             sr.scrollTop = sr.scrollHeight;   // 内容滚动到最后一行
         };
 
+        // ws.onmessage = function(evt) {
+            
+            
+        //     document.getElementById('messages').innerHTML
+        //             += '<br />' + evt.data;
+            
+        //     sr.scrollTop = sr.scrollHeight;   // 内容滚动到最后一行
+        // };
+
    </script>
+
+    <script type="text/javascript">
+
+        // $(function(){...})这个是在页面DOM文档加载完成后加载执行的，等效于$(document).ready(function(){...});
+        // 优于window.onload，后者必须等到页面内包括图片的所有元素加载完毕后才能执行
+
+        $(function () {
+
+            //第一步是获取user_token
+
+            
+
+            let $my_tree = $('#treeview').treeview({
+                data: tree_view,
+
+                //展开节点时的操作
+                onNodeExpanded: function (event, node) {
+                    if(node.tags != ["busy"] && node.tags != ["free"]){
+                        //如果不是叶子节点,即tags不为busy or free , 则加载子节点
+                        //这里我们采用动态加载的机制
+                        //采用动态加载好像出现了一些问题
+                        if(node.nodes.length == 0)
+                        {
+                            generateTree(node);
+                        }
+                        
+                    }
+                    console.log(node.text + " was expanded.");
+                },
+
+                //收起节点时的操作
+                onNodeCollapsed: function(event, node) {
+                    // $('#expandible-output').prepend('<p>' + node.text + ' was collapsed</p>');
+                    //这一步出现了删掉图标的问题
+                    // $("#treeview").treeview("deleteChildrenNode", node.nodeId);
+                    console.log(node.text + " was collapsed.");
+                },
+
+                //选中节点时的操作
+                onNodeChecked: function(event, node) {
+                    //console.log("You choose node " + node.text);
+                    //加入最后的集合里面
+                    device_set.add(node.text);
+                    $('#checkable-output').prepend('<p>' + node.text + ' was checked</p>');
+                    $('#checkable-output').prepend('<p>' + device_set.size + '</p>');
+                },
+
+                //取消选中时的操作
+                onNodeUnchecked: function(event, node){
+                    //console.log(node.text + " was unchecked.");
+                    $('#checkable-output').prepend('<p>' + node.text + ' was unchecked</p>');
+
+                    device_set.delete(node.text);
+                    $('#checkable-output').prepend('<p>' + device_set.size + '</p>');
+                },
+            });
+
+            var findCheckableNodess = function() {
+            return $my_tree.treeview('search', [ $('#input-check-node').val(), { ignoreCase: false, exactMatch: false } ]);
+            };
+            var checkableNodes = findCheckableNodess();
+
+            // Check/uncheck/toggle nodes
+            $('#input-check-node').on('keyup', function (e) {
+            checkableNodes = findCheckableNodess();
+            $('.check-node').prop('disabled', !(checkableNodes.length >= 1));
+            });
+
+            $('#btn-check-node.check-node').on('click', function (e) {
+            $my_tree.treeview('checkNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+            });
+
+            $('#btn-uncheck-node.check-node').on('click', function (e) {
+            $my_tree.treeview('uncheckNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+            });
+
+            $('#btn-toggle-checked.check-node').on('click', function (e) {
+            $my_tree.treeview('toggleNodeChecked', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+            });
+
+            // Check/uncheck all
+            $('#btn-check-all').on('click', function (e) {
+            $my_tree.treeview('checkAll', { silent: $('#chk-check-silent').is(':checked') });
+            });
+
+            $('#btn-uncheck-all').on('click', function (e) {
+            $my_tree.treeview('uncheckAll', { silent: $('#chk-check-silent').is(':checked') });
+            device_set.clear();
+            });
+
+            $('#btn-add-checked').on('click', function (e) {
+                //应当执行我们自定义的逻辑
+                showDevices();
+            //  console.log(devices);
+            });
+        });
+
+
+    </script>
     <script src="js/functions.js"></script>
     <script src="js/binarytransport.js"></script>
     <script src="js/upload.js"></script>
     <script src="js/sendHttp.js"></script>
+   
+
     <script src="js/device.js"></script>
     <script src="js/main.js"></script>
-    
+    <script src = "./js/bootstrap-treeview.js"></script>
+
+    <script src = "./js/test.js"></script>
     
     <script src="js/build_table.js"></script>
 

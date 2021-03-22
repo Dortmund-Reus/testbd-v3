@@ -1,5 +1,5 @@
 //主逻辑
-
+let device_set = new Set();
 // let addrShow = document.getElementById('addr-show');
 let deviceShow = document.getElementById('device-show');
 let add_dev_btn = document.getElementsByClassName('add')[0];
@@ -170,7 +170,7 @@ showNodesAll();
 function selectNodes(obj) {
     current.device_id = obj.options[obj.selectedIndex].innerText;
     order =  obj.options[obj.selectedIndex].value;              //选中的设备序号
-   // console.log(current.device_id);
+    console.log(order);
     if (order != null) {
         add_dev_btn.disabled = false;
     }
@@ -180,7 +180,9 @@ let mySet = new Set();//记录当前的设备id
 /*点击确定按钮显示用户所选的设备*/
 //并将其添加到设备列表中去
 function showDevice() {
-    deviceShow.value = current.device_id; 
+    //假如我们只选了设备，如何获取它的板子名称呢？
+    deviceShow.value = current.device_id;
+    //妙啊
     new_device_boardName = devices_json.data.devices[order].boardname;
     new_device_id = devices_json.data.devices[order].deviceid;
     if(devices_json.data.devices[order].busy)
@@ -213,3 +215,31 @@ function showDevice() {
     }
 }
 
+function showDevices(){
+    device_set.forEach(function(value) {
+        new_device_boardName = value.substring(5, value.length - 2);
+        new_device_id = value;
+        new_device_clientId = "0";
+        new_device_status = "idle"
+        console.log(new_device_boardName); 
+        console.log(new_device_id);
+
+        //如果表是空的，我们应当从头建表
+        if(mySet.size == 0){
+            generateTable(table, devices);
+            generateTableHead(table, data);
+            insertNewRow(new_device_boardName,  new_device_id, new_device_status, new_device_clientId, "");
+            mySet.add(new_device_id);
+            table.deleteRow(1);//把一开始用于建表的那一行删掉
+            // insertNewRow
+            // mySet.add(new_device_id);
+        } else if(mySet.has(new_device_id)){
+            //不可以重复添加设备
+            alert("不可以重复添加!");
+            return;
+        } else {
+            insertNewRow(new_device_boardName,  new_device_id, new_device_status, new_device_clientId, "");
+            mySet.add(new_device_id);
+        }
+    });
+}
